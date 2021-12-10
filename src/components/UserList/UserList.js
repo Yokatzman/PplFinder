@@ -15,6 +15,7 @@ const UserList = ({ users, isLoading }) => {
     Australia: false,
     Canada: false,
     Germany: false,
+    France: false,
     numChecked: 0
   });
 
