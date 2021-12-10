@@ -7,7 +7,15 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 
 const UserList = ({ users, isLoading }) => {
+
+  
   const [hoveredUserId, setHoveredUserId] = useState();
+  const [countriesChecked, setCountriesChecked] = useState({
+    Brazil: false,
+    Australia: false,
+    Canada: false,
+    Germany: true
+  });
 
   const handleMouseEnter = (index) => {
     setHoveredUserId(index);
@@ -16,7 +24,7 @@ const UserList = ({ users, isLoading }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
-
+  
   return (
     <S.UserList>
       <S.Filters>
@@ -27,7 +35,10 @@ const UserList = ({ users, isLoading }) => {
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
-          return (
+          console.log('yaaaa');
+          console.log(user.location.country);
+          if (countriesChecked[user.location.country] == true)
+          {return (
             <S.User
               key={index}
               onMouseEnter={() => handleMouseEnter(index)}
@@ -52,7 +63,7 @@ const UserList = ({ users, isLoading }) => {
                 </IconButton>
               </S.IconButtonWrapper>
             </S.User>
-          );
+          );} else return null;
         })}
         {isLoading && (
           <S.SpinnerWrapper>
