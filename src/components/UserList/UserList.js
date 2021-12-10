@@ -14,7 +14,8 @@ const UserList = ({ users, isLoading }) => {
     Brazil: false,
     Australia: false,
     Canada: false,
-    Germany: true
+    Germany: false,
+    numChecked: 0
   });
 
   const handleMouseEnter = (index) => {
@@ -24,21 +25,56 @@ const UserList = ({ users, isLoading }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
+  const handleCheckBox = (country) => {
+    console.log(country);
+    let label = ""
+    switch(country){
+      case "BR":
+        label = "Brazil"
+        break;
+      case "AU":
+        label = "Australia"
+        break;
+      case "CA":
+        label = "Canada"
+        break;
+      case "DE":
+        label = "Germany"
+        break;
+      case "FR":
+        label = "France"
+        break;
+    }
+    //console.log(label);
+    //console.log(countriesChecked);
+    let newChecked = Object.assign({},countriesChecked);
+    newChecked[label] = !countriesChecked[label];
+    //console.log(countriesChecked);
+
+    console.log(label + ' is ' + countriesChecked[label]);
+    if (countriesChecked[label]==true){
+      newChecked['numChecked'] = countriesChecked['numChecked']-1;
+    } else{
+      newChecked['numChecked'] = countriesChecked['numChecked']+1
+    }
+    console.log(newChecked);
+    setCountriesChecked(newChecked);
+  }
   
   return (
     <S.UserList>
       <S.Filters>
-        <CheckBox value="BR" label="Brazil" />
-        <CheckBox value="AU" label="Australia" />
-        <CheckBox value="CA" label="Canada" />
-        <CheckBox value="DE" label="Germany" />
+        <CheckBox onChange={handleCheckBox} value="BR" label="Brazil" />
+        <CheckBox onChange={handleCheckBox} value="AU" label="Australia" />
+        <CheckBox onChange={handleCheckBox} value="CA" label="Canada" />
+        <CheckBox onChange={handleCheckBox} value="DE" label="Germany" />
+        <CheckBox onChange={handleCheckBox} value="FR" label="France" />
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
-          console.log('yaaaa');
-          console.log(user.location.country);
-          if (countriesChecked[user.location.country] == true)
-          {return (
+          //console.log(user.location.country);
+          if (countriesChecked[user.location.country] == true || countriesChecked['numChecked']==0){
+            return (
             <S.User
               key={index}
               onMouseEnter={() => handleMouseEnter(index)}
