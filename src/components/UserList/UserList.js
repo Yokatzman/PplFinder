@@ -26,6 +26,15 @@ const UserList = ({ users, isLoading }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
+  const addFavorite = (user)=>{
+    console.log('adddd');
+    fetch('favorites.json',{
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }
+    }).then((result)=>result.json()).then((data)=>console.log(data.results));
+  }
   const handleCheckBox = (country) => {
     console.log(country);
     let label = ""
@@ -46,6 +55,7 @@ const UserList = ({ users, isLoading }) => {
         label = "France"
         break;
     }
+    
   
     let newChecked = Object.assign({},countriesChecked);
     newChecked[label] = !countriesChecked[label];
@@ -92,8 +102,11 @@ const UserList = ({ users, isLoading }) => {
                 </Text>
               </S.UserInfo>
               <S.IconButtonWrapper isVisible={index === hoveredUserId}>
-                <IconButton>
-                  <FavoriteIcon color="error" />
+                <IconButton >
+                  <FavoriteIcon onClick={()=>{
+                    console.log('favoriteeee')
+                    addFavorite(user);
+                  }} color="error" />
                 </IconButton>
               </S.IconButtonWrapper>
             </S.User>
