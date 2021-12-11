@@ -46,11 +46,9 @@ const UserList = ({ users, isLoading }) => {
         label = "France"
         break;
     }
-    //console.log(label);
-    //console.log(countriesChecked);
+  
     let newChecked = Object.assign({},countriesChecked);
     newChecked[label] = !countriesChecked[label];
-    //console.log(countriesChecked);
 
     console.log(label + ' is ' + countriesChecked[label]);
     if (countriesChecked[label]==true){
@@ -73,7 +71,6 @@ const UserList = ({ users, isLoading }) => {
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
-          //console.log(user.location.country);
           if (countriesChecked[user.location.country] == true || countriesChecked['numChecked']==0){
             return (
             <S.User
