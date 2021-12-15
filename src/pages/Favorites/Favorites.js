@@ -1,11 +1,11 @@
 import React from "react";
 import Text from "components/Text";
 import UserList from "components/UserList";
-import { usePeopleFetch } from "hooks";
+import { useFavoritesFetch } from "hooks";
 import * as S from "./style";
 
 const Favorites = () => {
-  const { users, isLoading } = usePeopleFetch();
+  const { users, isLoading } = useFavoritesFetch();
 
   return (
     <S.Favorites>

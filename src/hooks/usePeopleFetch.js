@@ -11,7 +11,9 @@ export const usePeopleFetch = () => {
 
   async function fetchUsers() {
     setIsLoading(true);
-    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
+    //const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
+    //get the same users each time-
+    const response = await axios.get(`https://randomuser.me/api/?results=25&seed=powerlink&page=1`);
     setIsLoading(false);
     setUsers(response.data.results);
   }

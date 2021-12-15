@@ -5,11 +5,15 @@ import CheckBox from "components/CheckBox";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
-
+import axios from 'axios'
+const api = axios.create({
+  baseURL: "http://localhost:3002/results"
+})
 const UserList = ({ users, isLoading }) => {
 
   
   const [hoveredUserId, setHoveredUserId] = useState();
+
   const [countriesChecked, setCountriesChecked] = useState({
     Brazil: false,
     Australia: false,
@@ -26,14 +30,37 @@ const UserList = ({ users, isLoading }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
-  const addFavorite = (user)=>{
-    console.log('adddd');
-    fetch('favorites.json',{
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       }
-    }).then((result)=>result.json()).then((data)=>console.log(data.results));
+  const addFavorite = (userData)=>{
+    //console.log(userData);
+    /*console.log('adddd');
+    api.get('/').then(res=>{
+      console.log(res.data);
+    })
+    delete userData['id'];
+    console.log(userData);
+
+    //api.post('', JSON.stringify({userData}));
+    var stringified = JSON.stringify(userData)
+    api.post('/', stringified, {
+      headers: {
+    // Overwrite Axios's automatically set Content-Type
+    'Content-Type': 'application/json',
+    'accept': "application/json"
+     }
+    }).catch(err=>{console.log(err)});*/
+
+    api.get('/').then(res=>{
+      console.log(res);
+      let filtered= Object.values(res.data).filter(user=>user.login.uuid == userData.login.uuid);
+      /*if (filtered.length != 0){
+        api.delete(filtered[0].id)
+      }*/
+      console.log(filtered);
+      var n = ''+filtered[0].id
+      api.delete(n);
+    })
+
+    
   }
   const handleCheckBox = (country) => {
     console.log(country);

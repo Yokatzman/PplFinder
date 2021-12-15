@@ -1,0 +1,57 @@
+{
+  "results": [
+    {
+      "gender": "male",
+      "name": {
+        "title": "Mr",
+        "first": "Kaïs",
+        "last": "Aubert"
+      },
+      "location": {
+        "street": {
+          "number": 6238,
+          "name": "Avenue Goerges Clémenceau"
+        },
+        "city": "Besançon",
+        "state": "Sarthe",
+        "country": "France",
+        "postcode": 22604,
+        "coordinates": {
+          "latitude": "-1.0265",
+          "longitude": "-123.8075"
+        },
+        "timezone": {
+          "offset": "-8:00",
+          "description": "Pacific Time (US & Canada)"
+        }
+      },
+      "email": "kais.aubert@example.com",
+      "login": {
+        "uuid": "602912d2-1f49-4d72-8325-8121ac810fc3",
+        "username": "blackgoose570",
+        "password": "chewy",
+        "salt": "e0pM1BlI",
+        "md5": "b96de9193f0bddb308771a014ef03508",
+        "sha1": "2fdb80ae725681c41aedb3360f11915a5bdcdebe",
+        "sha256": "b5c4432c27e1298f4f8c2cfab661d325154b208edd3bc3ec573da2f3aa8bd6d2"
+      },
+      "dob": {
+        "date": "1950-04-12T00:21:04.334Z",
+        "age": 71
+      },
+      "registered": {
+        "date": "2005-01-02T03:11:59.695Z",
+        "age": 16
+      },
+      "phone": "04-75-10-97-27",
+      "cell": "06-31-22-45-20",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/men/6.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/men/6.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/men/6.jpg"
+      },
+      "nat": "FR",
+      "id": "K2fnnok"
+    }
+  ]
+}
