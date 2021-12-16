@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 export const useFavoritesFetch = () => {
-  const [users, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -22,5 +22,5 @@ export const useFavoritesFetch = () => {
     setFavorites(response.data);
   }
 
-  return { users, isLoading, fetchFavorites };
+  return { favorites, isLoading, fetchFavorites };
 };

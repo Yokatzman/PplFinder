@@ -9,7 +9,46 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: "http://localhost:3002/results"
 })
-const UserList = ({ users, isLoading }) => {
+const UserList = ({ users, isLoading, favorites }) => {
+
+
+  let firstMap = {};
+  users.forEach(user=>{
+    firstMap[user.login.uuid]=user.favorite;
+  })
+  const isFavorite = (uuid) => {
+    //console.log(favorites);
+      let bool = false;
+      
+      favorites.forEach(element => {
+        if (element.login.uuid == uuid){
+          bool = true;
+        }
+      });
+      /*let filtered= Object.values(favorites.data).filter(user=>{
+          //console.log(user.login.uuid + ' vs ' +uuid);
+          return user.login.uuid == uuid});
+      if (filtered.length>0){
+          console.log('true found');
+          bool = true;
+        }*/
+      
+      //console.log(bool +' ' +uuid)
+      firstMap[uuid]=bool;
+  };
+  const [favoritesMap, setFavoritesMap] = useState(firstMap);
+
+  for (const value1 of Object.values(users)) {
+    //console.log(value1);
+    let currUuid = value1.login.uuid;
+    //console.log(currUuid + isFavorite(currUuid));
+    
+    isFavorite(currUuid);
+    }
+  //setFavoritesMap(firstMap);
+
+  //console.log(firstMap);
+  
 
   
   const [hoveredUserId, setHoveredUserId] = useState();
@@ -31,30 +70,9 @@ const UserList = ({ users, isLoading }) => {
     setHoveredUserId();
   };
   const addFavorite = (userData)=>{
-    //console.log(userData);
-    /*console.log('adddd');
-    api.get('/').then(res=>{
-      console.log(res.data);
-    })
-    delete userData['id'];
-    console.log(userData);
-
-    //api.post('', JSON.stringify({userData}));
-    var stringified = JSON.stringify(userData)
-    api.post('/', stringified, {
-      headers: {
-    // Overwrite Axios's automatically set Content-Type
-    'Content-Type': 'application/json',
-    'accept': "application/json"
-     }
-    }).catch(err=>{console.log(err)});*/
-
     api.get('/').then(res=>{
       console.log(res);
       let filtered= Object.values(res.data).filter(user=>user.login.uuid == userData.login.uuid);
-      /*if (filtered.length != 0){
-        api.delete(filtered[0].id)
-      }*/
       console.log(filtered);
       var n = ''+filtered[0].id
       api.delete(n);
@@ -96,7 +114,6 @@ const UserList = ({ users, isLoading }) => {
     console.log(newChecked);
     setCountriesChecked(newChecked);
   }
-  
   return (
     <S.UserList>
       <S.Filters>
@@ -128,7 +145,7 @@ const UserList = ({ users, isLoading }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId}>
+              <S.IconButtonWrapper isVisible={index === hoveredUserId || firstMap[user.login.uuid]==true}>
                 <IconButton >
                   <FavoriteIcon onClick={()=>{
                     console.log('favoriteeee')
