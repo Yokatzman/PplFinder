@@ -9,13 +9,14 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: "http://localhost:3002/results"
 })
-const UserList = ({ users, isLoading, favorites }) => {
+const UserList = ({ users, isLoading, favorites,firstMap }) => {
 
-
+/*
   let firstMap = {};
   users.forEach(user=>{
     firstMap[user.login.uuid]=user.favorite;
-  })
+  })*/
+
   const isFavorite = (uuid) => {
     //console.log(favorites);
       let bool = false;
@@ -34,9 +35,12 @@ const UserList = ({ users, isLoading, favorites }) => {
         }*/
       
       //console.log(bool +' ' +uuid)
-      firstMap[uuid]=bool;
+      //firstMap[uuid]=bool;
   };
   const [favoritesMap, setFavoritesMap] = useState(firstMap);
+  useEffect(() => { setFavoritesMap(firstMap)}, [firstMap] );
+  console.log(firstMap["55116e84-f542-4027-81b2-9a7f2421e67d"]);
+  console.log(favoritesMap["55116e84-f542-4027-81b2-9a7f2421e67d"]);
 
   for (const value1 of Object.values(users)) {
     //console.log(value1);
@@ -70,6 +74,7 @@ const UserList = ({ users, isLoading, favorites }) => {
     setHoveredUserId();
   };
   const addFavorite = (userData)=>{
+
     api.get('/').then(res=>{
       console.log(res);
       let filtered= Object.values(res.data).filter(user=>user.login.uuid == userData.login.uuid);
@@ -81,7 +86,6 @@ const UserList = ({ users, isLoading, favorites }) => {
     
   }
   const handleCheckBox = (country) => {
-    console.log(country);
     let label = ""
     switch(country){
       case "BR":
@@ -145,7 +149,7 @@ const UserList = ({ users, isLoading, favorites }) => {
                   {user?.location.city} {user?.location.country}
                 </Text>
               </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId || firstMap[user.login.uuid]==true}>
+              <S.IconButtonWrapper isVisible={index === hoveredUserId || favoritesMap[user.login.uuid]==true}>
                 <IconButton >
                   <FavoriteIcon onClick={()=>{
                     console.log('favoriteeee')

@@ -10,13 +10,13 @@ const Home = () => {
   const { users, isLoading } = usePeopleFetch();
   const { favorites, isLoading2 } = useFavoritesFetch();
   console.log(favorites);
-
+  var firstmap={}
   favorites.forEach(favorite=>{
     var found = false;
     users.forEach(user=>{
       if (user.login.uuid == favorite.login.uuid){
         console.log(user.name.first + ' true')
-        found=true;
+        firstmap[user.login.uuid]=true;
       }
       user['favorite']=found;
       found = false
@@ -31,7 +31,7 @@ const Home = () => {
             PplFinder
           </Text>
         </S.Header>
-        <UserList users={users} isLoading={isLoading} favorites={favorites} />
+        <UserList users={users} isLoading={isLoading} favorites={favorites} firstMap={firstmap}/>
       </S.Content>
     </S.Home>
   );
