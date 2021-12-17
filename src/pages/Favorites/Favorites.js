@@ -8,10 +8,6 @@ import * as S from "./style";
 
 const Favorites = () => {
   const { favorites, isLoading } = useFavoritesFetch();
-  var firstMap={}
-  favorites.forEach(element=>{
-    firstMap[element.login.uuid]=true;
-  })
   return (
     <S.Favorites>
       <S.Content>
@@ -20,7 +16,7 @@ const Favorites = () => {
             PplFinder - Favorites
           </Text>
         </S.Header>
-        <FavoritesList users={favorites} isLoading={isLoading} favorites={favorites} firstMap={firstMap} />
+        <FavoritesList users={favorites} isLoading={isLoading}/>
       </S.Content>
     </S.Favorites>
   );
