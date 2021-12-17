@@ -16,7 +16,7 @@ const Favorites = () => {
             PplFinder - Favorites
           </Text>
         </S.Header>
-        <FavoritesList users={favorites} isLoading={isLoading}/>
+        <FavoritesList users={favorites} isLoading={isLoading} />
       </S.Content>
     </S.Favorites>
   );

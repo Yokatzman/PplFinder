@@ -13,7 +13,6 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
 
 
   const isFavorite = (uuid) => {
-    //console.log(favorites);
     let bool = false;
 
     favorites.forEach(element => {
@@ -58,9 +57,8 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
       newMap[userData.login.uuid] = false
       setFavoritesMap(newMap);
       api.get('/').then(res => {
-        console.log(res);
         let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
-        if (filtered.length>0){
+        if (filtered.length > 0) {
           var delId = '' + filtered[0].id
           api.delete(delId);
         }
@@ -71,14 +69,13 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
       setFavoritesMap(newMap);
       delete userData['id'];
       api.get('/').then(res => {
-        console.log(res);
         let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
-        if (filtered.length==0){
-          api.post('/',userData);
+        if (filtered.length == 0) {
+          api.post('/', userData);
         }
       })
 
-      
+
     }
 
 
@@ -108,13 +105,11 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
     let newChecked = Object.assign({}, countriesChecked);
     newChecked[label] = !countriesChecked[label];
 
-    console.log(label + ' is ' + countriesChecked[label]);
     if (countriesChecked[label] == true) {
       newChecked['numChecked'] = countriesChecked['numChecked'] - 1;
     } else {
       newChecked['numChecked'] = countriesChecked['numChecked'] + 1
     }
-    console.log(newChecked);
     setCountriesChecked(newChecked);
   }
   return (
@@ -151,7 +146,6 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
                 <S.IconButtonWrapper isVisible={index === hoveredUserId || favoritesMap[user.login.uuid] == true}>
                   <IconButton >
                     <FavoriteIcon onClick={() => {
-                      console.log('favoriteeee')
                       addOrDelFavorite(user);
                     }} color="error" />
                   </IconButton>

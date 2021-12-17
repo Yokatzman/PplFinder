@@ -27,13 +27,10 @@ const FavoritesList = ({ users, isLoading }) => {
     setHoveredUserId();
   };
   const DeleteFavorite = (userData) => {
-    console.log(favoritesList);
     var newList = favoritesList.slice();
-    console.log(newList);
-    
+
 
     api.get('/').then(res => {
-      console.log(res);
       let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
       if (filtered.length > 0) {
         var delId = '' + filtered[0].id
@@ -43,7 +40,6 @@ const FavoritesList = ({ users, isLoading }) => {
             _index = index;
           }
         })
-        console.log(newList);
         newList.splice(_index, 1);
         setFavoritesList(newList);
         api.delete(delId);
@@ -80,7 +76,6 @@ const FavoritesList = ({ users, isLoading }) => {
               <S.IconButtonWrapper isVisible={true}>
                 <IconButton >
                   <FavoriteIcon onClick={() => {
-                    console.log('favoriteeee')
                     DeleteFavorite(user);
                   }} color="error" />
                 </IconButton>

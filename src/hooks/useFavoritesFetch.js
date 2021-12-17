@@ -12,12 +12,10 @@ export const useFavoritesFetch = () => {
   }, []);
 
   async function fetchFavorites() {
-    console.log('fetch!!')
     setIsLoading(true);
-    //const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
+    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
     //get the same users each time-
-    const response = await axios.get(`http://localhost:3002/results`);
-    console.log(response);
+    //const response = await axios.get(`http://localhost:3002/results`);
     setIsLoading(false);
     setFavorites(response.data);
   }

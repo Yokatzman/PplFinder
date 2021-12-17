@@ -9,16 +9,14 @@ import * as S from "./style";
 const Home = () => {
   const { users, isLoading } = usePeopleFetch();
   const { favorites, isLoading2 } = useFavoritesFetch();
-  console.log(favorites);
-  var firstmap={}
-  favorites.forEach(favorite=>{
+  var firstmap = {}
+  favorites.forEach(favorite => {
     var found = false;
-    users.forEach(user=>{
-      if (user.login.uuid == favorite.login.uuid){
-        console.log(user.name.first + ' true')
-        firstmap[user.login.uuid]=true;
+    users.forEach(user => {
+      if (user.login.uuid == favorite.login.uuid) {
+        firstmap[user.login.uuid] = true;
       }
-      user['favorite']=found;
+      user['favorite'] = found;
       found = false
     })
   })
@@ -31,7 +29,7 @@ const Home = () => {
             PplFinder
           </Text>
         </S.Header>
-        <UserList users={users} isLoading={isLoading} favorites={favorites} firstMap={firstmap}/>
+        <UserList users={users} isLoading={isLoading} favorites={favorites} firstMap={firstmap} />
       </S.Content>
     </S.Home>
   );
