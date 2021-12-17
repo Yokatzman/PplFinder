@@ -9,52 +9,31 @@ import axios from 'axios'
 const api = axios.create({
   baseURL: "http://localhost:3002/results"
 })
-const UserList = ({ users, isLoading, favorites,firstMap }) => {
+const UserList = ({ users, isLoading, favorites, firstMap }) => {
 
-/*
-  let firstMap = {};
-  users.forEach(user=>{
-    firstMap[user.login.uuid]=user.favorite;
-  })*/
 
   const isFavorite = (uuid) => {
     //console.log(favorites);
-      let bool = false;
-      
-      favorites.forEach(element => {
-        if (element.login.uuid == uuid){
-          bool = true;
-        }
-      });
-      /*let filtered= Object.values(favorites.data).filter(user=>{
-          //console.log(user.login.uuid + ' vs ' +uuid);
-          return user.login.uuid == uuid});
-      if (filtered.length>0){
-          console.log('true found');
-          bool = true;
-        }*/
-      
-      //console.log(bool +' ' +uuid)
-      //firstMap[uuid]=bool;
+    let bool = false;
+
+    favorites.forEach(element => {
+      if (element.login.uuid == uuid) {
+        bool = true;
+      }
+    });
   };
   const [favoritesMap, setFavoritesMap] = useState(firstMap);
-  useEffect(() => { setFavoritesMap(firstMap)}, [firstMap] );
-  console.log(firstMap["55116e84-f542-4027-81b2-9a7f2421e67d"]);
-  console.log(favoritesMap["55116e84-f542-4027-81b2-9a7f2421e67d"]);
+  useEffect(() => { setFavoritesMap(firstMap) }, [firstMap]);
 
   for (const value1 of Object.values(users)) {
-    //console.log(value1);
+
     let currUuid = value1.login.uuid;
-    //console.log(currUuid + isFavorite(currUuid));
-    
+
+
     isFavorite(currUuid);
-    }
-  //setFavoritesMap(firstMap);
+  }
 
-  //console.log(firstMap);
-  
 
-  
   const [hoveredUserId, setHoveredUserId] = useState();
 
   const [countriesChecked, setCountriesChecked] = useState({
@@ -73,21 +52,41 @@ const UserList = ({ users, isLoading, favorites,firstMap }) => {
   const handleMouseLeave = () => {
     setHoveredUserId();
   };
-  const addFavorite = (userData)=>{
+  const addOrDelFavorite = (userData) => {
+    var newMap = Object.assign({}, favoritesMap);
+    if (favoritesMap[userData.login.uuid] == true) {
+      newMap[userData.login.uuid] = false
+      setFavoritesMap(newMap);
+      api.get('/').then(res => {
+        console.log(res);
+        let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
+        if (filtered.length>0){
+          var delId = '' + filtered[0].id
+          api.delete(delId);
+        }
+      })
 
-    api.get('/').then(res=>{
-      console.log(res);
-      let filtered= Object.values(res.data).filter(user=>user.login.uuid == userData.login.uuid);
-      console.log(filtered);
-      var n = ''+filtered[0].id
-      api.delete(n);
-    })
+    } else {
+      newMap[userData.login.uuid] = true;
+      setFavoritesMap(newMap);
+      delete userData['id'];
+      api.get('/').then(res => {
+        console.log(res);
+        let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
+        if (filtered.length==0){
+          api.post('/',userData);
+        }
+      })
 
-    
+      
+    }
+
+
+
   }
   const handleCheckBox = (country) => {
     let label = ""
-    switch(country){
+    switch (country) {
       case "BR":
         label = "Brazil"
         break;
@@ -104,16 +103,16 @@ const UserList = ({ users, isLoading, favorites,firstMap }) => {
         label = "France"
         break;
     }
-    
-  
-    let newChecked = Object.assign({},countriesChecked);
+
+
+    let newChecked = Object.assign({}, countriesChecked);
     newChecked[label] = !countriesChecked[label];
 
     console.log(label + ' is ' + countriesChecked[label]);
-    if (countriesChecked[label]==true){
-      newChecked['numChecked'] = countriesChecked['numChecked']-1;
-    } else{
-      newChecked['numChecked'] = countriesChecked['numChecked']+1
+    if (countriesChecked[label] == true) {
+      newChecked['numChecked'] = countriesChecked['numChecked'] - 1;
+    } else {
+      newChecked['numChecked'] = countriesChecked['numChecked'] + 1
     }
     console.log(newChecked);
     setCountriesChecked(newChecked);
@@ -129,36 +128,37 @@ const UserList = ({ users, isLoading, favorites,firstMap }) => {
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
-          if (countriesChecked[user.location.country] == true || countriesChecked['numChecked']==0){
+          if (countriesChecked[user.location.country] == true || countriesChecked['numChecked'] == 0) {
             return (
-            <S.User
-              key={index}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <S.UserPicture src={user?.picture.large} alt="" />
-              <S.UserInfo>
-                <Text size="22px" bold>
-                  {user?.name.title} {user?.name.first} {user?.name.last}
-                </Text>
-                <Text size="14px">{user?.email}</Text>
-                <Text size="14px">
-                  {user?.location.street.number} {user?.location.street.name}
-                </Text>
-                <Text size="14px">
-                  {user?.location.city} {user?.location.country}
-                </Text>
-              </S.UserInfo>
-              <S.IconButtonWrapper isVisible={index === hoveredUserId || favoritesMap[user.login.uuid]==true}>
-                <IconButton >
-                  <FavoriteIcon onClick={()=>{
-                    console.log('favoriteeee')
-                    addFavorite(user);
-                  }} color="error" />
-                </IconButton>
-              </S.IconButtonWrapper>
-            </S.User>
-          );} else return null;
+              <S.User
+                key={index}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <S.UserPicture src={user?.picture.large} alt="" />
+                <S.UserInfo>
+                  <Text size="22px" bold>
+                    {user?.name.title} {user?.name.first} {user?.name.last}
+                  </Text>
+                  <Text size="14px">{user?.email}</Text>
+                  <Text size="14px">
+                    {user?.location.street.number} {user?.location.street.name}
+                  </Text>
+                  <Text size="14px">
+                    {user?.location.city} {user?.location.country}
+                  </Text>
+                </S.UserInfo>
+                <S.IconButtonWrapper isVisible={index === hoveredUserId || favoritesMap[user.login.uuid] == true}>
+                  <IconButton >
+                    <FavoriteIcon onClick={() => {
+                      console.log('favoriteeee')
+                      addOrDelFavorite(user);
+                    }} color="error" />
+                  </IconButton>
+                </S.IconButtonWrapper>
+              </S.User>
+            );
+          } else return null;
         })}
         {isLoading && (
           <S.SpinnerWrapper>
