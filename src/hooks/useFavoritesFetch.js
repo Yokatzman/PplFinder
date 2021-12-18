@@ -13,9 +13,8 @@ export const useFavoritesFetch = () => {
 
   async function fetchFavorites() {
     setIsLoading(true);
-    const response = await axios.get(`https://randomuser.me/api/?results=25&page=1`);
     //get the same users each time-
-    //const response = await axios.get(`http://localhost:3002/results`);
+    const response = await axios.get(`http://localhost:3002/results`);
     setIsLoading(false);
     setFavorites(response.data);
   }
