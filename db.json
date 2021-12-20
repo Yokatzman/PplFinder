@@ -1,4 +1,4 @@
 {
-  "results": [
+  "results": [{"gender":"female","name":{"title":"Miss","first":"Esma","last":"Düşenkalkar"},"location":{"street":{"number":3921,"name":"Mevlana Cd"},"city":"Kütahya","state":"Erzincan","country":"Turkey","postcode":99772,"coordinates":{"latitude":"76.5483","longitude":"58.3273"},"timezone":{"offset":"-9:00","description":"Alaska"}},"email":"esma.dusenkalkar@example.com","login":{"uuid":"55116e84-f542-4027-81b2-9a7f2421e67d","username":"blackmeercat691","password":"ravens","salt":"vticlBqe","md5":"a260ee059f02eca23c4dfec5011cf8b1","sha1":"bb56c572f0cdd5b6336f6e19737ef6c83aae4ce5","sha256":"7bb0f5cd7266cebc0b625969d3a332269aa9995c3549e0ecaf2c30160d4c1907"},"dob":{"date":"1971-06-08T11:06:06.647Z","age":50},"registered":{"date":"2018-09-28T12:59:34.493Z","age":3},"phone":"(211)-834-8189","cell":"(244)-474-7454","id":0,"picture":{"large":"https://randomuser.me/api/portraits/women/14.jpg","medium":"https://randomuser.me/api/portraits/med/women/14.jpg","thumbnail":"https://randomuser.me/api/portraits/thumb/women/14.jpg"},"nat":"TR"}
   ]
 }

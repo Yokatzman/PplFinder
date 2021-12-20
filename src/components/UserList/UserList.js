@@ -6,8 +6,9 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 import axios from 'axios'
+//for online json server
 const api = axios.create({
-  baseURL: "http://localhost:3002/results"
+  baseURL: "https://ppldb.herokuapp.com/results"
 })
 const UserList = ({ users, isLoading, favorites, firstMap }) => {
 
@@ -72,6 +73,21 @@ const UserList = ({ users, isLoading, favorites, firstMap }) => {
         let filtered = Object.values(res.data).filter(user => user.login.uuid == userData.login.uuid);
         if (filtered.length == 0) {
           api.post('/', userData);
+          //jsonbin.io
+          /*
+          let req = new XMLHttpRequest();
+
+          req.onreadystatechange = () => {
+            if (req.readyState == XMLHttpRequest.DONE) {
+              console.log(req.responseText);
+            }
+          };
+          
+          req.open("POST", "https://api.jsonbin.io/v3/b", true);
+          req.setRequestHeader("Content-Type", "application/json");
+          req.setRequestHeader("X-Master-Key", "$2b$10$KXD03S39n1mD.Hyx45nXWeksxgtJeXNmujGO4pLjbDeWLRthVoiom");
+          req.setRequestHeader("X-Collection-Id","61be09c2b8fdb92a527b3ff1");
+          req.send(JSON.stringify(userData));*/
         }
       })
 

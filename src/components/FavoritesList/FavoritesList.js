@@ -7,7 +7,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
 import axios from 'axios'
 const api = axios.create({
-  baseURL: "http://localhost:3002/results"
+  baseURL: "https://ppldb.herokuapp.com/results"
 })
 const FavoritesList = ({ users, isLoading }) => {
 
