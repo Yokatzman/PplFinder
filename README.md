@@ -11,10 +11,8 @@ To get this app running locally all you need to do is:
 2. [Fork this repository](https://github.com/powerlink/PplFinder) to your GitHub account.
 3. Clone your newly created repository
 4. In the created folder install the node modules `npm install`
-5. run `npm install -g json-server`
-6. run `json-server --watch db.json --port 3002` (make sure the db.json file is existing as found in the repository)
-7. Run the app `npm start`
-8. Your local app should be available at `http://localhost:3000`
+5. Run the app `npm start`
+6. Your local app should be available at `http://localhost:3000`
 
 ## Your Tasks
 
